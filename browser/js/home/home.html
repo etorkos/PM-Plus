@@ -12,6 +12,7 @@
 	      		</div>
 	    	</div>
 	    </div>
+
 	    <div class="floatleft col-md-2">
 	    	<h3>Open Tasks</h3>	
 	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list2">
@@ -23,6 +24,7 @@
 
 	    	</div>
 	    </div>
+
 		<div class="floatleft col-md-2">		
 	    	<h3>In Process</h3>	
 	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list3">
@@ -33,6 +35,7 @@
 	      		</div>
 	    	</div>
 		</div>
+
 		<div class="floatleft col-md-2">
 	    	<h3>Finished Tasks</h3>	
 	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list4">
@@ -43,10 +46,23 @@
 	      		</div>
 	    	</div>
 	    </div>
+
+	    <div class='floatright col-md-4'>
+		    <h2>Dynamic Image Tree</h2>
+		  	<div class="floatleft">
+		    	<tg-dynamic-directive ng-model="rootItem" tg-dynamic-directive-view="getView">
+		    	</tg-dynamic-directive>
+		    	<div style="clear: both;"></div>
+		  	</div>
+
+		  	<div class="floatright">
+		  		<p>{{items}}</p>
+		  	</div>
+		</div>
 	    <div style="clear: both;"></div>
 	</div>
 
-
+	
 
 	<!-- Model Log -->
   <div class="floatleft col-md-2">
@@ -59,7 +75,17 @@
   </div>
   
   <div class="clear"></div>
-
-
-
+  
 </section>
+
+<script type="text/ng-template" id="nestable_item.html">
+    <div>
+      {{ngModelItem.title}}
+      <ul class="apps-container" ui-sortable="sortableOptions" ng-model="ngModelItem.items">
+        <li class="innerCont" ng-repeat="innerItem in ngModelItem.items">
+          <tg-dynamic-directive ng-model="innerItem" tg-dynamic-directive-view="getView">
+          </tg-dynamic-directive>
+        </li>
+      </ul>
+    </div>
+  </script>

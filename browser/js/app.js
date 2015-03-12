@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('PMSuper', ['ui.router', 'fsaPreBuilt', 'ui.sortable']);
+var app = angular.module('PMSuper', ['ui.router', 'fsaPreBuilt', 'ui.sortable', 'tg.dynamicDirective']);
 
 app.controller('MainController', function ($scope) {
 

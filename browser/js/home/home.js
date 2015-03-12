@@ -77,13 +77,45 @@ app.controller('HomeCtrl', function ($scope) {
       $scope.sortingLog.push(logEntry);
     }
   };
-});
 
-// function findAppById(appList, id){
-//     //IDs are unique so we know we'll only return one app or null
-//     var app=$.grep(appList, function(e){return e.id == id})[0]
-//     if(app && app !== undefined)
-//         return app;
-//     else
-//         return null;
-// }
+
+
+  //part 2 the tree
+
+  $scope.rootItem = {
+    title: 'Root Item',
+    items: [{
+      title:'Item 1',
+      items: []
+    }, {
+      title:'Item 2',
+      items: [{
+        title:'Item 2.1', items: []
+      }, {
+        title:'Item 2.2', items: []
+      }]
+    }]
+  };
+
+  $scope.items = $scope.rootItem.items;
+  
+  $scope.sortingLog = [];
+  
+  $scope.sortableOptions = {
+    connectWith: ".apps-container",
+  };
+
+  $scope.getView = function (item) {
+      /*
+        you can return a different url
+        to load a different template dynamically
+        based on the provided item 
+        */
+      if (item) {
+        return 'nestable_item.html';
+      }
+      return null;
+  };
+
+
+});
