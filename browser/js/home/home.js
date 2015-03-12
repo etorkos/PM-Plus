@@ -87,40 +87,61 @@ app.controller('HomeCtrl', function ($scope) {
   $scope.list3 = []; //process
   $scope.list4 = []; //finished
 
-  function assignTasks (array){
-
-  	for(var a = 0, len = array.length; a< len; a++){
-  		switch ( array[a].status ) {
+  function assignT (node){
+  	switch ( node.status ) {
   			case 'blocked':
-  				$scope.list1.push(array[a]) //task is blocked
+  				$scope.list1.push(node) //task is blocked
   				break;
 			case 'process':
-  				$scope.list3.push(array[a]) //task is process
+  				$scope.list3.push(node) //task is process
   				break;
   			case 'finished':
-  				$scope.list4.push(array[a]) //task is finished
+  				$scope.list4.push(node) //task is finished
   				break;
   			default:
-  				$scope.list2.push(array[a]) //default on open
+  				$scope.list2.push(node) //default on open
   				break;
   		}
+  		return;
+  }
+
+  function assignTasks (array){
+  	// debugger;
+  	if(array.title){
+  		console.log('entered loop with ',array.title);
+  	}
+  	if(!array.length){
+  		assignT(array);
+  		if(array.children){
+  			array.children.forEach(function(node){
+	  			console.log(node.title, ' is going into the rabbit hole!');
+	  			assignTasks(node);
+	  		});
+  		}
+  		return;
+  	}
+
+  	var len = array.length ? array.length : 1;
+  	for(var a = 0; a< len; a++){
+  		assignT(array[a]);
+  		// debugger;
 	  	if(array[a].children){
 	  		console.log('going deeper with ', array[a].title);
 	  		array[a].children.forEach(function(node){
+	  			console.log(node.title, ' is going into the rabbit hole!');
 	  			assignTasks(node);
 	  		});
 	  	}
 	  	console.log('finished accessing array ', array[a].title);
 	};
 	console.log('going up or done..');
-	debugger;
 	return;
   };
+
 
   assignTasks($scope.infoArray);
 
   $scope.sortingLog = [];
-  
   $scope.sortableOptions = {
     placeholder: "app",
     connectWith: ".apps-container"
