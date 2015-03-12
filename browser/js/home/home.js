@@ -22,84 +22,6 @@ app.controller('HomeCtrl', function ($scope) {
 	//both can respond to user input, and will change the other proportionally
   
   var tmpList = [];
-  
- //  $scope.infoArray = [
- //  {
- //      icon: './img/icons/facebook.jpg',
- //      title: 'Build backend',
- //      link: 'http://www.facebook.com',
- //      owner: 'Peter',
- //      status: 'blocked',
- //      ttc: 8,
- //      parents: [],
-	//       children: [
-	//       {
-	//       icon: './img/icons/facebook.jpg',
-	//       title: 'Create user schema',
-	//       link: 'http://www.facebook.com',
-	//       owner: 'Lorence',
-	//       ttc: 4,
-	//       status: 'blocked',
-	//       parents: ['Build Backend'],
-	//       children: [{
-	// 	      icon: './img/icons/gmail.jpg',
-	// 	      title: 'Do basic user research',
-	// 	      link: 'http://www.gmail.com',
-	// 	      owner: 'Jin',
-	// 	      ttc: 4,
-	// 	      status: 'process',
-	// 	      parents: ['create user schema'],
-	// 	      children: []
-	// 		}]
-	//     }
-	//     ]
- //    }, {
- //      icon: './img/icons/youtube.jpg',
- //      title: 'Add user oauth functionality',
- //      link: 'http://www.youtube.com',
- //      owner: 'Jenny',
- //      ttc: 3,
- //      status: 'process',
- //      parents: [],
- //      children: []
- //    },
- //    {
- //      icon: './img/icons/facebook.jpg',
- //      title: 'Create user schema',
- //      link: 'http://www.facebook.com',
- //      owner: 'Lorence',
- //      status: 'blocked',
- //      ttc: 4,
- //      parents: [],
- //      children: []
- //    }, {
- //      icon: './img/icons/youtube.jpg',
- //      title: 'Create item middleware',
- //      link: 'http://www.youtube.com',
- //      owner: 'Amber',
- //      ttc: 16,
- //      status: 'finished',
- //      parents: [],
- //      children: []
- //    }, {
- //      icon: './img/icons/gmail.jpg',
- //      title: 'Get awesome Pictures',
- //      link: 'http://www.gmail.com',
- //      owner: 'Jin',
- //      ttc: 4,
- //      status: 'open',
- //      parents: [],
- //      children: []
- //    },{
- //      icon: './img/icons/gmail.jpg',
- //      title: 'Do basic user research',
- //      link: 'http://www.gmail.com',
- //      owner: 'Jin',
- //      ttc: 4,
- //      status: 'process',
- //      parents: ['create user schema'],
- //      children: []
-	// }];
 
 	$scope.infoArray = [
   {
@@ -159,11 +81,6 @@ app.controller('HomeCtrl', function ($scope) {
       parents: [],
       children: []
     }];
-
-  // $scope.list1 = [$scope.infoArray[0], $scope.infoArray[1], $scope.infoArray[2]];
-  // $scope.list2 = [$scope.infoArray[3], $scope.infoArray[4]];
-  // $scope.list3 = [];
-  // $scope.list4 = [];
   
   $scope.list1 = []; //blocked
   $scope.list2 = []; //open
@@ -196,6 +113,7 @@ app.controller('HomeCtrl', function ($scope) {
 	  	console.log('finished accessing array ', array[a].title);
 	};
 	console.log('going up or done..');
+	debugger;
 	return;
   };
 
@@ -224,30 +142,22 @@ app.controller('HomeCtrl', function ($scope) {
   //part 2 the tree
 
   //find parents
-  $scope.rootItem;
+  $scope.rootItem = [];
   function setParents (){
 
   	$scope.infoArray.forEach(function(node){
-  		if(!node.parents){
+  		console.log('node', node);
+  		if(node.parents.length === 0){
+  			console.log('i have no parents!?');
+  			debugger;
   			$scope.rootItem.push(node);
   		}
   	});
+  	console.log('scope.rootitem ', $scope.rootItem)
   	$scope.items = $scope.rootItem.children;
   }
 
-  setParents();
-
-  // $scope.rootItem = {
-  //   title: '', //is the main, necessary for overall spacing and objective
-  //   children: [$scope.infoArray[0], {
-  //     title:'Task 2',
-  //     children: [$scope.infoArray[3], 
-  //     $scope.infoArray[4]
-  //     ]},
-  //     $scope.infoArray[1]]
-  // };
-
-  
+  setParents(); 
   
   $scope.sortingLog = [];
   
