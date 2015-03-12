@@ -28,33 +28,91 @@ app.controller('HomeCtrl', function ($scope) {
       icon: './img/icons/facebook.jpg',
       title: 'Build backend',
       link: 'http://www.facebook.com',
-      owner: 'Peter'
+      owner: 'Peter',
+      ttc: 8,
+      parents: [],
+      children: []
     }, {
       icon: './img/icons/youtube.jpg',
       title: 'Add user oauth functionality',
       link: 'http://www.youtube.com',
-      owner: 'Jenny'
+      owner: 'Jenny',
+      ttc: 3,
+      parents: [],
+      children: []
     }],
     [{
       icon: './img/icons/facebook.jpg',
       title: 'Create user schema',
       link: 'http://www.facebook.com',
-      owner: 'Lorence'
+      owner: 'Lorence',
+      ttc: 4,
+      parents: [],
+      children: []
     }, {
       icon: './img/icons/youtube.jpg',
       title: 'Create item middleware',
       link: 'http://www.youtube.com',
-      owner: 'Amber'
+      owner: 'Amber',
+      ttc: 16,
+      parents: [],
+      children: []
     }, {
       icon: './img/icons/gmail.jpg',
       title: 'Get awesome Pictures',
       link: 'http://www.gmail.com',
-      owner: 'Jin'
-    }],
-    [],
-    []
+      owner: 'Jin',
+      ttc: 4,
+      parents: [],
+      children: []
+    }]
   ];
   
+  // $scope.infoArray = [
+  //   [{
+  //     icon: './img/icons/facebook.jpg',
+  //     title: 'Build backend',
+  //     link: 'http://www.facebook.com',
+  //     owner: 'Peter',
+  //     ttc: 8,
+  //     parents: [],
+  //     children: []
+  //   }, {
+  //     icon: './img/icons/youtube.jpg',
+  //     title: 'Add user oauth functionality',
+  //     link: 'http://www.youtube.com',
+  //     owner: 'Jenny',
+  //     ttc: 3,
+  //     parents: [],
+  //     children: []
+  //   },
+  //   {
+  //     icon: './img/icons/facebook.jpg',
+  //     title: 'Create user schema',
+  //     link: 'http://www.facebook.com',
+  //     owner: 'Lorence',
+  //     ttc: 4,
+  //     parents: [],
+  //     children: []
+  //   }, {
+  //     icon: './img/icons/youtube.jpg',
+  //     title: 'Create item middleware',
+  //     link: 'http://www.youtube.com',
+  //     owner: 'Amber',
+  //     ttc: 16,
+  //     parents: [],
+  //     children: []
+  //   }, {
+  //     icon: './img/icons/gmail.jpg',
+  //     title: 'Get awesome Pictures',
+  //     link: 'http://www.gmail.com',
+  //     owner: 'Jin',
+  //     ttc: 4,
+  //     parents: [],
+  //     children: []
+  //   }];
+
+
   $scope.list1 = $scope.rawScreens[0];
   $scope.list2 = $scope.rawScreens[1];
   $scope.list3 = $scope.rawScreens[2];
@@ -83,17 +141,20 @@ app.controller('HomeCtrl', function ($scope) {
   //part 2 the tree
 
   $scope.rootItem = {
-    title: 'Root Item',
-    items: [{
-      title:'Item 1',
-      items: []
+    title: '', //is the main, necessary for overall spacing and objective
+    children: [{
+      title:'Task 1',
+      children: []
     }, {
-      title:'Item 2',
-      items: [{
-        title:'Item 2.1', items: []
+      title:'Task 2',
+      children: [{
+        title:'Task 3', children: []
       }, {
-        title:'Item 2.2', items: []
-      }]
+        title:'Task 4', children: []
+      }]},
+      {
+      title: 'Task 5',
+      children: []
     }]
   };
 

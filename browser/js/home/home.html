@@ -1,5 +1,4 @@
 <section id="home">
-    <h1>Project Management +Plus </h1>
     <!-- Main user display -->
     <div class='floarleft'>
 	  	<div class="floatleft col-md-2">
@@ -9,6 +8,7 @@
 	      			<span class='floatleft'>{{$index}} </span>
 	      			<h5>{{app.title}}</h5>
 	      			<h5>Owner: {{app.owner}}</h5>
+	      			<h6>Hours: {{app.ttc}}</h6>
 	      		</div>
 	    	</div>
 	    </div>
@@ -20,6 +20,7 @@
 	      			<span class='floatleft'>{{$index}} </span>
 	      			<h5>{{app.title}}</h5>
 	      			<h5>Owner: {{app.owner}}</h5>
+	      			<h6>Hours: {{app.ttc}}</h6>
 	      		</div>
 
 	    	</div>
@@ -32,6 +33,7 @@
 	      			<span class='floatleft'>{{$index}} </span>
 	      			<h5>{{app.title}}</h5>
 	      			<h5>Owner: {{app.owner}}</h5>
+	      			<h6>Hours: {{app.ttc}}</h6>
 	      		</div>
 	    	</div>
 		</div>
@@ -43,20 +45,21 @@
 	      			<span class='floatleft'>{{$index}} </span> 
 	      			<h5>{{app.title}}</h5>
 	      			<h5>Owner: {{app.owner}}</h5>
+	      			<h6>Hours: {{app.ttc}}</h6>
 	      		</div>
 	    	</div>
 	    </div>
 
 	    <div class='floatright col-md-4'>
-		    <h2>Dynamic Image Tree</h2>
-		  	<div class="floatleft">
+		    <h3>Dynamic Image Tree</h3>
+		  	<div class="floatleft bump">
 		    	<tg-dynamic-directive ng-model="rootItem" tg-dynamic-directive-view="getView">
 		    	</tg-dynamic-directive>
 		    	<div style="clear: both;"></div>
 		  	</div>
 
 		  	<div class="floatright">
-		  		<p>{{items}}</p>
+		  		<p>{{children}}</p>
 		  	</div>
 		</div>
 	    <div style="clear: both;"></div>
@@ -75,14 +78,14 @@
   </div>
   
   <div class="clear"></div>
-  
+
 </section>
 
 <script type="text/ng-template" id="nestable_item.html">
     <div>
       {{ngModelItem.title}}
-      <ul class="apps-container" ui-sortable="sortableOptions" ng-model="ngModelItem.items">
-        <li class="innerCont" ng-repeat="innerItem in ngModelItem.items">
+      <ul class="apps-container" ui-sortable="sortableOptions" ng-model="ngModelItem.children">
+        <li class="innerCont" ng-repeat="innerItem in ngModelItem.children">
           <tg-dynamic-directive ng-model="innerItem" tg-dynamic-directive-view="getView">
           </tg-dynamic-directive>
         </li>
