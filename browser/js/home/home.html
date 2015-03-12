@@ -1,0 +1,65 @@
+<section id="home">
+    <h1>Project Management +Plus </h1>
+    <!-- Main user display -->
+    <div class='floarleft'>
+	  	<div class="floatleft col-md-2">
+	  		<h3>Blocked Tasks</h3>
+	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list1">
+	      		<div class="app" ng-repeat="app in list1">
+	      			<span class='floatleft'>{{$index}} </span>
+	      			<h5>{{app.title}}</h5>
+	      			<h5>Owner: {{app.owner}}</h5>
+	      		</div>
+	    	</div>
+	    </div>
+	    <div class="floatleft col-md-2">
+	    	<h3>Open Tasks</h3>	
+	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list2">
+	      		<div class="app" ng-repeat="app in list2"> 
+	      			<span class='floatleft'>{{$index}} </span>
+	      			<h5>{{app.title}}</h5>
+	      			<h5>Owner: {{app.owner}}</h5>
+	      		</div>
+
+	    	</div>
+	    </div>
+		<div class="floatleft col-md-2">		
+	    	<h3>In Process</h3>	
+	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list3">
+	      		<div class="app" ng-repeat="app in list3">
+	      			<span class='floatleft'>{{$index}} </span>
+	      			<h5>{{app.title}}</h5>
+	      			<h5>Owner: {{app.owner}}</h5>
+	      		</div>
+	    	</div>
+		</div>
+		<div class="floatleft col-md-2">
+	    	<h3>Finished Tasks</h3>	
+	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list4">
+	      		<div class="app" ng-repeat="app in list4">
+	      			<span class='floatleft'>{{$index}} </span> 
+	      			<h5>{{app.title}}</h5>
+	      			<h5>Owner: {{app.owner}}</h5>
+	      		</div>
+	    	</div>
+	    </div>
+	    <div style="clear: both;"></div>
+	</div>
+
+
+
+	<!-- Model Log -->
+  <div class="floatleft col-md-2">
+    <button type="button" ng-click="logModels()">Log Models</button>
+    <ul class="list logList">
+      <li ng-repeat="entry in sortingLog" class="logItem">
+        {{entry}}
+      </li>
+    </ul>
+  </div>
+  
+  <div class="clear"></div>
+
+
+
+</section>
