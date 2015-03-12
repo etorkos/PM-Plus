@@ -84,7 +84,7 @@
 <script type="text/ng-template" id="nestable_item.html">
     <div>
       {{ngModelItem.title}}
-      <ul class="apps-container" ui-sortable="sortableOptions" ng-model="ngModelItem.children">
+      <ul class="apps-container minus" ui-sortable="sortableOptions" ng-model="ngModelItem.children">
         <li class="innerCont" ng-repeat="innerItem in ngModelItem.children">
           <tg-dynamic-directive ng-model="innerItem" tg-dynamic-directive-view="getView">
           </tg-dynamic-directive>
