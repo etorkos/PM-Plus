@@ -108,13 +108,13 @@ app.controller('HomeCtrl', function ($scope) {
   function assignTasks (array){
   	// debugger;
   	if(array.title){
-  		console.log('entered loop with ',array.title);
+  		// console.log('entered loop with ',array.title);
   	}
   	if(!array.length){
   		assignT(array);
   		if(array.children){
   			array.children.forEach(function(node){
-	  			console.log(node.title, ' is going into the rabbit hole!');
+	  			// console.log(node.title, ' is going into the rabbit hole!');
 	  			assignTasks(node);
 	  		});
   		}
@@ -128,13 +128,13 @@ app.controller('HomeCtrl', function ($scope) {
 	  	if(array[a].children){
 	  		console.log('going deeper with ', array[a].title);
 	  		array[a].children.forEach(function(node){
-	  			console.log(node.title, ' is going into the rabbit hole!');
+	  			// console.log(node.title, ' is going into the rabbit hole!');
 	  			assignTasks(node);
 	  		});
 	  	}
-	  	console.log('finished accessing array ', array[a].title);
+	  	// console.log('finished accessing array ', array[a].title);
 	};
-	console.log('going up or done..');
+	// console.log('going up or done..');
 	return;
   };
 
@@ -167,10 +167,10 @@ app.controller('HomeCtrl', function ($scope) {
   function setParents (){
 
   	$scope.infoArray.forEach(function(node){
-  		console.log('node', node);
+  		// console.log('node', node);
   		if(node.parents.length === 0){
-  			console.log('i have no parents!?');
-  			debugger;
+  			// console.log('i have no parents!?');
+  			// debugger;
   			$scope.rootItem.push(node);
   		}
   	});
