@@ -233,15 +233,15 @@ app.controller('HomeCtrl', function ($scope) {
   	console.log('into swap');
   	console.log(arrayObjectIndexOf($scope.list1, item, 'id') > -1);
   	console.log(arrayObjectIndexOf($scope.list4, item, 'id') > -1);
-  	if(fromLocation == 4){
+  	if(fromLocation == 4){ //will do later
 
   	}
 
   	if(arrayObjectIndexOf($scope.list1, item, 'id') > -1){ //if object came back to blocked
   		console.log('item moved to list one');
   		var objSwap = $scope.list1[arrayObjectIndexOf($scope.list1, item, 'id')];
-  		objSwap.locked = true;
-  		objSwap.status = 'blocked';
+  		objSwap.locked = false;
+  		objSwap.status = 'open';
   		return;
   	}
   	else if(arrayObjectIndexOf($scope.list4, item, 'id') > -1){ //if object landed at finished tasks
@@ -249,12 +249,12 @@ app.controller('HomeCtrl', function ($scope) {
   		var objSwap = $scope.list4[arrayObjectIndexOf($scope.list4, item, 'id')];
   		objSwap.locked = false;
   		objSwap.status = 'finished';
-  		console.log('main object', objSwap);
+  		// console.log('main object', objSwap);
   		if(objSwap.parents && arrayObjectIndexOf($scope.list1, objSwap.parents[0], 'id') != -1) {
-  			console.log('statement is true!?!', arrayObjectIndexOf($scope.list1, objSwap.parents[0], 'id') != -1);
-  			console.log('location of parent ', arrayObjectIndexOf($scope.list1, objSwap.parents[0], 'id'));
+  			// console.log('statement is true!?!', arrayObjectIndexOf($scope.list1, objSwap.parents[0], 'id') != -1);
+  			// console.log('location of parent ', arrayObjectIndexOf($scope.list1, objSwap.parents[0], 'id'));
   			var parent = $scope.list1.splice(arrayObjectIndexOf($scope.list1, objSwap.parents[0], 'id'), 1)[0];
-  			console.log('parent object', parent);
+  			// console.log('parent object', parent);
   			parent.locked = false;
   			parent.status = 'open';
   			$scope.list2.push(parent);
