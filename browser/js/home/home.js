@@ -91,7 +91,8 @@ app.controller('HomeCtrl', function ($scope) {
   
   
 
-  function assignT (node){
+  function assignT (node){ //doing the actual assinging of nodes to a task list
+  	var myStatus = false;
   	switch ( node.status ) {
   			case 'blocked':
   				$scope.list1.push(node) //task is blocked
@@ -101,57 +102,79 @@ app.controller('HomeCtrl', function ($scope) {
   				break;
   			case 'finished':
   				$scope.list4.push(node) //task is finished
+  				myStatus = true;
   				break;
   			default:
   				$scope.list2.push(node) //default on open
   				break;
   		}
-  		return;
+  		return myStatus;
   }
 
   function assignTasks (array){
   	// debugger;
-  	var resolved = false;
-  	// if(array.title){
-  	 	// console.log('entered loop with ',array.title); //for debugging
-  	// }
+  	var myChildStatus = true; //start off with open (not blocked)
   	if(!array.length){
-  		assignT(array);
-  		if(array.children){
+  		// debugger;
+  		if(array.children){ //if the node has children
   			array.children.forEach(function(node){
-	  			// console.log(node.title, ' is going into the rabbit hole!');
-	  			assignTasks(node);
+	  			var childStatus = assignTasks(node);
+	  			if(myChildStatus && !childStatus){ //if a child is blocking
+	  				myChildStatus = false;
+	  			}
 	  		});
   		}
-  		return;
+  		checkLock(array, myChildStatus);
+  		assignT(array);
+  		return array.status === 'finished';
   	}
-
   	var len = array.length ? array.length : 1;
-  	for(var a = 0; a< len; a++){
-  		assignT(array[a]);
+  	for(var a = 0; a< len; a++){ //cycle through all items in the array
   		// debugger;
+  		var myChildStatus = true;
 	  	if(array[a].children){
-	  		// console.log('going deeper with ', array[a].title);
 	  		array[a].children.forEach(function(node){
-	  			// console.log(node.title, ' is going into the rabbit hole!');
-	  			assignTasks(node);
+	  			var childStatus = assignTasks(node);
+	  			if(myChildStatus && !childStatus){
+	  				myChildStatus = false;
+	  			}
 	  		});
 	  	}
-	  	// console.log('finished accessing array ', array[a].title);
+	  	checkLock(array[a], myChildStatus);
+	  	assignT(array[a]);
 	};
-	// console.log('going up or done..');
-	return;
+	return array.status === 'finished';
   };
 
-
-  assignTasks($scope.infoArray); //convert array into list
-
-  $scope.sortingLog = [];
-  $scope.sortableOptions = {
-    placeholder: "app",
-    connectWith: ".apps-container"
-  };
+  function checkLock (node, childStatus){
+  	if(node.status == 'blocked' && childStatus){ //if it was blocked and children no longer block, it will be open
+		console.log(node.title, " is being un-blocked");
+		node.status = 'open';
+		node.locked = false;
+	}
+	else if(node.status != 'blocked' && !childStatus){ //if a child is addded which blocks, block the parent
+		console.log(node.title, " is being blocked");
+		node.status = 'blocked';
+		node.locked = true;
+	}
+  }
   
+  function update(){ //updates display, sets parents from lists, how to capture information about tree update?
+  	//uses location from 
+  	function recursion(node, ){
+  		if(){ //if you have children, go to them first
+
+  		}
+  		//if you should be blocked, block item,
+  		//if you should be unblocked, unblock item
+  		//return status as blocked or unblocked
+  	}
+  	$scope.list1.forEach(function(node){//should i be combined with setparents?
+
+  	})
+
+  }
+
   $scope.logModels = function () {
     $scope.sortingLog = [];
     for (var i = 1; i < 5; i++) {
@@ -165,8 +188,7 @@ app.controller('HomeCtrl', function ($scope) {
 
   //part 2 the tree
 
-  //find parents
-  $scope.rootItem = [];
+  
   function setParents (){
   	$scope.rootItem = []; //hard reset
   	$scope.infoArray.forEach(function(node){
@@ -179,21 +201,30 @@ app.controller('HomeCtrl', function ($scope) {
   	// console.log('scope.rootitem ', $scope.rootItem)
   	$scope.rootItem = {title:'', children: $scope.rootItem};
   	$scope.items = $scope.rootItem;
-
-  // console.log('test shape', $scope.rootItem);
   }
 
-  setParents(); 
-  
+  //--//--//--//--//--//--//
+  //startup process
+  assignTasks($scope.infoArray); //convert array into list
   $scope.sortingLog = [];
-  
+  $scope.sortableOptions = {
+    placeholder: "app",
+    connectWith: ".apps-container"
+  };
+  $scope.rootItem = [];
+  setParents(); 
+  $scope.sortingLog = [];
+  //--//--//--//--//--//--//
+
+
   $scope.sortableOptions = {
   	stop: function(e, ui){
   		// push to infoArray, reset values from updated info
   		 console.log('e', e, 'ui', ui)
   		// //if lists were updated
-  		// $scope.infoArray = $scope.list1.concat($scope.list2, $scope.list3, $scope.list4);
-  		// setParents(); 
+  		 $scope.infoArray = $scope.list1.concat($scope.list2, $scope.list3, $scope.list4);
+  		 // needs a check lock for everyt item method
+  		 setParents(); 
   		//if Tree was updated
 
   	},
