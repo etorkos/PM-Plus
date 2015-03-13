@@ -5,7 +5,7 @@ app.controller('MainController', function ($scope) {
 
     // Given to the <navbar> directive to show the menu.
     $scope.menuItems = [
-        { label: 'Demo', state: 'home' },
+        { label: 'Demo', state: 'home' }
     ];
 
 });

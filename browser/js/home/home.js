@@ -26,7 +26,7 @@ app.controller('HomeCtrl', function ($scope) {
   $scope.list4 = []; //finished
 
 	$scope.infoArray = [
-  {
+  {	id:1,
       icon: './img/icons/facebook.jpg',
       title: 'Build backend',
       link: 'http://www.facebook.com',
@@ -37,6 +37,7 @@ app.controller('HomeCtrl', function ($scope) {
       locked: true,
 	  children: [
 	      {
+	      	id:2,
 	      icon: './img/icons/facebook.jpg',
 	      title: 'Create user schema',
 	      link: 'http://www.facebook.com',
@@ -44,8 +45,9 @@ app.controller('HomeCtrl', function ($scope) {
 	      ttc: 4,
 	      status: 'blocked',
 	      locked: true,
-	      parents: ['Build Backend'],
+	      parents: [1],
 	      children: [{
+	      	id:3,
 		      icon: './img/icons/gmail.jpg',
 		      title: 'Do basic user research',
 		      link: 'http://www.gmail.com',
@@ -53,11 +55,12 @@ app.controller('HomeCtrl', function ($scope) {
 		      ttc: 4,
 		      status: 'process',
 		      locked: false,
-		      parents: ['create user schema'],
+		      parents: [2],
 		      children: []
 		  }]
 	    }]}, 
 	 {
+	 id:4,
       icon: './img/icons/youtube.jpg',
       title: 'Add user oauth functionality',
       link: 'http://www.youtube.com',
@@ -68,6 +71,7 @@ app.controller('HomeCtrl', function ($scope) {
       locked: false,
       children: []
     }, {
+    	id:5,
       icon: './img/icons/youtube.jpg',
       title: 'Create item middleware',
       link: 'http://www.youtube.com',
@@ -78,6 +82,7 @@ app.controller('HomeCtrl', function ($scope) {
       locked: false,
       children: []
     }, {
+    	id: 6,
       icon: './img/icons/gmail.jpg',
       title: 'Get awesome Pictures',
       link: 'http://www.gmail.com',
@@ -159,21 +164,21 @@ app.controller('HomeCtrl', function ($scope) {
 	}
   }
   
-  function update(){ //updates display, sets parents from lists, how to capture information about tree update?
-  	//uses location from 
-  	function recursion(node, ){
-  		if(){ //if you have children, go to them first
+  // function update(){ //updates display, sets parents from lists, how to capture information about tree update?
+  // 	//uses location from 
+  // 	function recursion(node, ){
+  // 		if(node.children){ //if you have children, go to them first
 
-  		}
-  		//if you should be blocked, block item,
-  		//if you should be unblocked, unblock item
-  		//return status as blocked or unblocked
-  	}
-  	$scope.list1.forEach(function(node){//should i be combined with setparents?
+  // 		}
+  // 		//if you should be blocked, block item,
+  // 		//if you should be unblocked, unblock item
+  // 		//return status as blocked or unblocked
+  // 	}
+  // 	$scope.list1.forEach(function(node){//should i be combined with setparents?
 
-  	})
+  // 	})
 
-  }
+  // }
 
   $scope.logModels = function () {
     $scope.sortingLog = [];
@@ -194,7 +199,7 @@ app.controller('HomeCtrl', function ($scope) {
   	$scope.infoArray.forEach(function(node){
   		// console.log('node', node);
   		if(node.parents.length === 0){
-  			debugger;
+  			// debugger;
   			$scope.rootItem.push(node);
   		}
   	});
@@ -216,15 +221,60 @@ app.controller('HomeCtrl', function ($scope) {
   $scope.sortingLog = [];
   //--//--//--//--//--//--//
 
+	function arrayObjectIndexOf(myArray, searchTerm, property) {
+	    for(var i = 0, len = myArray.length; i < len; i++) {
+	    	console.log(searchTerm, myArray[i][property])
+	        if (myArray[i][property] === searchTerm) return i;
+	    }
+	    return -1;
+	}
+
+  function swap (item, fromLocation){ //pass in list1[index]
+  	console.log('into swap');
+  	console.log(arrayObjectIndexOf($scope.list1, item, 'id') > -1);
+  	console.log(arrayObjectIndexOf($scope.list4, item, 'id') > -1);
+  	if(fromLocation == 4){
+
+  	}
+
+  	if(arrayObjectIndexOf($scope.list1, item, 'id') > -1){ //if object came back to blocked
+  		console.log('item moved to list one');
+  		var objSwap = $scope.list1[arrayObjectIndexOf($scope.list1, item, 'id')];
+  		objSwap.locked = true;
+  		objSwap.status = 'blocked';
+  		return;
+  	}
+  	else if(arrayObjectIndexOf($scope.list4, item, 'id') > -1){ //if object landed at finished tasks
+  		console.log('item moved to list 4');
+  		var objSwap = $scope.list4[arrayObjectIndexOf($scope.list4, item, 'id')];
+  		objSwap.locked = false;
+  		objSwap.status = 'finished';
+  		console.log('main object', objSwap);
+  		if(objSwap.parents && arrayObjectIndexOf($scope.list1, objSwap.parents[0], 'id') != -1) {
+  			console.log('statement is true!?!', arrayObjectIndexOf($scope.list1, objSwap.parents[0], 'id') != -1);
+  			console.log('location of parent ', arrayObjectIndexOf($scope.list1, objSwap.parents[0], 'id'));
+  			var parent = $scope.list1.splice(arrayObjectIndexOf($scope.list1, objSwap.parents[0], 'id'), 1)[0];
+  			console.log('parent object', parent);
+  			parent.locked = false;
+  			parent.status = 'open';
+  			$scope.list2.push(parent);
+  		}
+  		return;
+  	}
+
+  }
 
   $scope.sortableOptions = {
   	stop: function(e, ui){
   		// push to infoArray, reset values from updated info
-  		 console.log('e', e, 'ui', ui)
-  		// //if lists were updated
-  		 $scope.infoArray = $scope.list1.concat($scope.list2, $scope.list3, $scope.list4);
+  		console.log('e', e, 'ui', ui)
+  		var objInfo=ui.item[0].attributes[1].value.split('-');
+  		console.log('Item', objInfo[0], " moved from ", objInfo[1]);
+  		swap(Number(objInfo[0]), objInfo[1]);
+
+  		 //$scope.infoArray = $scope.list1.concat($scope.list2, $scope.list3, $scope.list4);
   		 // needs a check lock for everyt item method
-  		 setParents(); 
+  		 //setParents(); 
   		//if Tree was updated
 
   	},

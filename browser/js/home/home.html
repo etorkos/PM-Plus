@@ -3,8 +3,8 @@
     <div class='floarleft'>
 	  	<div class="floatleft col-md-2">
 	  		<h3>Blocked Tasks</h3>
-	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list1">
-	      		<div class="app" ng-repeat="app in list1" ng-class="{'not-sortable': app.locked}">
+	    	<div id='list1' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list1">
+	      		<div class="app" id='{{app.id}}-1' ng-repeat="app in list1" ng-class="{'not-sortable': app.locked}">
 	      			<span class='floatleft'>{{$index}} </span>
 	      			<h5>{{app.title}}</h5>
 	      			<h5>Owner: {{app.owner}}</h5>
@@ -15,8 +15,8 @@
 
 	    <div class="floatleft col-md-2">
 	    	<h3>Open Tasks</h3>	
-	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list2">
-	      		<div class="app" ng-repeat="app in list2"> 
+	    	<div id='list2' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list2">
+	      		<div class="app" id='{{app.id}}-2' ng-repeat="app in list2"> 
 	      			<span class='floatleft'>{{$index}} </span>
 	      			<h5>{{app.title}}</h5>
 	      			<h5>Owner: {{app.owner}}</h5>
@@ -28,8 +28,8 @@
 
 		<div class="floatleft col-md-2">		
 	    	<h3>In Process</h3>	
-	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list3">
-	      		<div class="app" ng-repeat="app in list3">
+	    	<div id='list3' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list3">
+	      		<div class="app" id='{{app.id}}-3' ng-repeat="app in list3">
 	      			<span class='floatleft'>{{$index}} </span>
 	      			<h5>{{app.title}}</h5>
 	      			<h5>Owner: {{app.owner}}</h5>
@@ -40,8 +40,8 @@
 
 		<div class="floatleft col-md-2">
 	    	<h3>Finished Tasks</h3>	
-	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list4">
-	      		<div class="app" ng-repeat="app in list4">
+	    	<div id='list4' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list4">
+	      		<div class="app" id='{{app.id}}-4' ng-repeat="app in list4">
 	      			<span class='floatleft'>{{$index}} </span> 
 	      			<h5>{{app.title}}</h5>
 	      			<h5>Owner: {{app.owner}}</h5>
@@ -67,10 +67,10 @@
 	</div>
 
 	
-{{rootItem}} </br>
-<div>List1: {{list1}}
+{{rootItem | json}} </br>
+<div>List1: {{list1 | json}}
 </div></br>
-<div>List4: {{list4}}
+<div>List4: {{list4 | json}}
 </div>
 
 	<!-- Model Log -->
