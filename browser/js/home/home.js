@@ -111,9 +111,10 @@ app.controller('HomeCtrl', function ($scope) {
 
   function assignTasks (array){
   	// debugger;
-  	if(array.title){
-  		// console.log('entered loop with ',array.title);
-  	}
+  	var resolved = false;
+  	// if(array.title){
+  	 	// console.log('entered loop with ',array.title); //for debugging
+  	// }
   	if(!array.length){
   		assignT(array);
   		if(array.children){
@@ -130,7 +131,7 @@ app.controller('HomeCtrl', function ($scope) {
   		assignT(array[a]);
   		// debugger;
 	  	if(array[a].children){
-	  		console.log('going deeper with ', array[a].title);
+	  		// console.log('going deeper with ', array[a].title);
 	  		array[a].children.forEach(function(node){
 	  			// console.log(node.title, ' is going into the rabbit hole!');
 	  			assignTasks(node);
@@ -153,11 +154,11 @@ app.controller('HomeCtrl', function ($scope) {
   
   $scope.logModels = function () {
     $scope.sortingLog = [];
-    for (var i = 0; i < 4; i++) {
-      var logEntry = $scope.rawScreens[i].map(function (x) {
+    for (var i = 1; i < 5; i++) {
+      var logEntry = $scope['list'+i].map(function (x) {
         return x.title;
       }).join(', ');
-      logEntry = 'container ' + (i+1) + ': ' + logEntry;
+      logEntry = 'container ' + (i) + ': ' + logEntry;
       $scope.sortingLog.push(logEntry);
     }
   };
@@ -167,10 +168,11 @@ app.controller('HomeCtrl', function ($scope) {
   //find parents
   $scope.rootItem = [];
   function setParents (){
-
+  	$scope.rootItem = []; //hard reset
   	$scope.infoArray.forEach(function(node){
   		// console.log('node', node);
   		if(node.parents.length === 0){
+  			debugger;
   			$scope.rootItem.push(node);
   		}
   	});
@@ -186,7 +188,17 @@ app.controller('HomeCtrl', function ($scope) {
   $scope.sortingLog = [];
   
   $scope.sortableOptions = {
+  	stop: function(e, ui){
+  		// push to infoArray, reset values from updated info
+  		 console.log('e', e, 'ui', ui)
+  		// //if lists were updated
+  		// $scope.infoArray = $scope.list1.concat($scope.list2, $scope.list3, $scope.list4);
+  		// setParents(); 
+  		//if Tree was updated
+
+  	},
     connectWith: ".apps-container",
+     items: "div:not(.not-sortable)"
   };
 
   $scope.getView = function (item) {
