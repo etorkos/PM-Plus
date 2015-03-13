@@ -32,7 +32,7 @@ app.controller('HomeCtrl', function ($scope) {
       status: 'blocked',
       ttc: 8,
       parents: [],
-	      children: [
+	  children: [
 	      {
 	      icon: './img/icons/facebook.jpg',
 	      title: 'Create user schema',
@@ -50,10 +50,9 @@ app.controller('HomeCtrl', function ($scope) {
 		      status: 'process',
 		      parents: ['create user schema'],
 		      children: []
-			}]
-	    }
-	    ]
-    }, {
+		  }]
+	    }]}, 
+	 {
       icon: './img/icons/youtube.jpg',
       title: 'Add user oauth functionality',
       link: 'http://www.youtube.com',
@@ -149,7 +148,7 @@ app.controller('HomeCtrl', function ($scope) {
   
   $scope.logModels = function () {
     $scope.sortingLog = [];
-    for (var i = 0; i < $scope.rawScreens.length; i++) {
+    for (var i = 0; i < 4; i++) {
       var logEntry = $scope.rawScreens[i].map(function (x) {
         return x.title;
       }).join(', ');
@@ -158,7 +157,7 @@ app.controller('HomeCtrl', function ($scope) {
     }
   };
 
-
+  $scope.tester = [{title: 'Simon', items: [ { title: 'nomon', items: []}]}, {title:'Yesyesyes', items: []}];
 
   //part 2 the tree
 
@@ -175,7 +174,7 @@ app.controller('HomeCtrl', function ($scope) {
   		}
   	});
   	console.log('scope.rootitem ', $scope.rootItem)
-  	$scope.items = $scope.rootItem.children;
+  	$scope.items = $scope.rootItem;
   }
 
   setParents(); 
