@@ -20,8 +20,10 @@ app.controller('HomeCtrl', function ($scope) {
 	//can see same items in tree
 
 	//both can respond to user input, and will change the other proportionally
-  
-  var tmpList = [];
+  $scope.list1 = []; //blocked
+  $scope.list2 = []; //open
+  $scope.list3 = []; //process
+  $scope.list4 = []; //finished
 
 	$scope.infoArray = [
   {
@@ -32,6 +34,7 @@ app.controller('HomeCtrl', function ($scope) {
       status: 'blocked',
       ttc: 8,
       parents: [],
+      locked: true,
 	  children: [
 	      {
 	      icon: './img/icons/facebook.jpg',
@@ -40,6 +43,7 @@ app.controller('HomeCtrl', function ($scope) {
 	      owner: 'Lorence',
 	      ttc: 4,
 	      status: 'blocked',
+	      locked: true,
 	      parents: ['Build Backend'],
 	      children: [{
 		      icon: './img/icons/gmail.jpg',
@@ -48,6 +52,7 @@ app.controller('HomeCtrl', function ($scope) {
 		      owner: 'Jin',
 		      ttc: 4,
 		      status: 'process',
+		      locked: false,
 		      parents: ['create user schema'],
 		      children: []
 		  }]
@@ -60,6 +65,7 @@ app.controller('HomeCtrl', function ($scope) {
       ttc: 3,
       status: 'process',
       parents: [],
+      locked: false,
       children: []
     }, {
       icon: './img/icons/youtube.jpg',
@@ -69,6 +75,7 @@ app.controller('HomeCtrl', function ($scope) {
       ttc: 16,
       status: 'finished',
       parents: [],
+      locked: false,
       children: []
     }, {
       icon: './img/icons/gmail.jpg',
@@ -78,13 +85,11 @@ app.controller('HomeCtrl', function ($scope) {
       ttc: 4,
       status: 'open',
       parents: [],
+      locked: false,
       children: []
     }];
   
-  $scope.list1 = []; //blocked
-  $scope.list2 = []; //open
-  $scope.list3 = []; //process
-  $scope.list4 = []; //finished
+  
 
   function assignT (node){
   	switch ( node.status ) {
@@ -138,7 +143,7 @@ app.controller('HomeCtrl', function ($scope) {
   };
 
 
-  assignTasks($scope.infoArray);
+  assignTasks($scope.infoArray); //convert array into list
 
   $scope.sortingLog = [];
   $scope.sortableOptions = {
@@ -157,8 +162,6 @@ app.controller('HomeCtrl', function ($scope) {
     }
   };
 
-  $scope.tester = [{title: 'Simon', items: [ { title: 'nomon', items: []}]}, {title:'Yesyesyes', items: []}];
-
   //part 2 the tree
 
   //find parents
@@ -168,13 +171,14 @@ app.controller('HomeCtrl', function ($scope) {
   	$scope.infoArray.forEach(function(node){
   		// console.log('node', node);
   		if(node.parents.length === 0){
-  			// console.log('i have no parents!?');
-  			// debugger;
   			$scope.rootItem.push(node);
   		}
   	});
-  	console.log('scope.rootitem ', $scope.rootItem)
+  	// console.log('scope.rootitem ', $scope.rootItem)
+  	$scope.rootItem = {title:'', children: $scope.rootItem};
   	$scope.items = $scope.rootItem;
+
+  // console.log('test shape', $scope.rootItem);
   }
 
   setParents(); 

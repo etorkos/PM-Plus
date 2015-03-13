@@ -4,7 +4,7 @@
 	  	<div class="floatleft col-md-2">
 	  		<h3>Blocked Tasks</h3>
 	    	<div ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list1">
-	      		<div class="app" ng-repeat="app in list1">
+	      		<div class="app" ng-repeat="app in list1" ng-class="{'not-sortable': app.locked}">
 	      			<span class='floatleft'>{{$index}} </span>
 	      			<h5>{{app.title}}</h5>
 	      			<h5>Owner: {{app.owner}}</h5>
