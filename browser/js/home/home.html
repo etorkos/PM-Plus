@@ -2,12 +2,12 @@
     <!-- Main user display -->
     <div class='row command-bar'>
     	<div class='col-md-offset-1'>
-    		<button class='btn btn-info' ng-click='AddThing()'>Add an Event</button>
-    		<button class='btn btn-info' ng-click='AddThing()'>Delete an Event</button>
+    		<button class='btn btn-info' ng-click='addThing()'>Add an Event</button>
+    		<button class='btn btn-info' ng-click='addThing()'>Delete an Event</button>
     	</div>
     </div>
 
-    <div class='floarleft'>
+    <div class='floatleft'>
 	  	<div class="floatleft col-md-2">
 	  		<h3>Blocked Tasks</h3>
 	    	<div id='list1' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list1">
@@ -74,14 +74,10 @@
 	</div>
 
 	
-{{rootItem | json}} </br>
-<div>List1: {{list1 | json}}
-</div></br>
-<div>List4: {{list4 | json}}
-</div>
-
+<!-- {{rootItem | json}} </br>
+ -->
 	<!-- Model Log -->
-  <div class="floatleft col-md-2">
+  <!-- <div class="floatleft col-md-2">
     <button type="button" ng-click="logModels()">Log Models</button>
     <ul class="list logList">
       <li ng-repeat="entry in sortingLog" class="logItem">
@@ -90,8 +86,12 @@
     </ul>
   </div>
   
-  <div class="clear"></div>
+  <div class="clear"></div> -->
 
+  <!-- Graph section -->
+  <div class='floatleft'>
+  	<linechart data="data" options="options" mode="" width="" height=""></linechart>
+  </div>
 </section>
 
 <script type="text/ng-template" id="nestable_item.html">

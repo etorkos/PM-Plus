@@ -30,7 +30,7 @@ app.controller('HomeCtrl', function ($scope) {
       icon: './img/icons/facebook.jpg',
       title: 'Build backend',
       link: 'http://www.facebook.com',
-      owner: 'Peter',
+      owner: 'Evan',
       status: 'blocked',
       ttc: 8,
       parents: [],
@@ -41,7 +41,7 @@ app.controller('HomeCtrl', function ($scope) {
 	      icon: './img/icons/facebook.jpg',
 	      title: 'Create user schema',
 	      link: 'http://www.facebook.com',
-	      owner: 'Lorence',
+	      owner: 'Evan',
 	      ttc: 4,
 	      status: 'blocked',
 	      locked: true,
@@ -51,7 +51,7 @@ app.controller('HomeCtrl', function ($scope) {
 		      icon: './img/icons/gmail.jpg',
 		      title: 'Do basic user research',
 		      link: 'http://www.gmail.com',
-		      owner: 'Jin',
+		      owner: 'Evan',
 		      ttc: 4,
 		      status: 'process',
 		      locked: false,
@@ -62,9 +62,9 @@ app.controller('HomeCtrl', function ($scope) {
 	 {
 	 id:4,
       icon: './img/icons/youtube.jpg',
-      title: 'Add user oauth functionality',
+      title: 'Add user / oauth functionality',
       link: 'http://www.youtube.com',
-      owner: 'Jenny',
+      owner: 'Evan',
       ttc: 3,
       status: 'process',
       parents: [],
@@ -75,7 +75,7 @@ app.controller('HomeCtrl', function ($scope) {
       icon: './img/icons/youtube.jpg',
       title: 'Create item middleware',
       link: 'http://www.youtube.com',
-      owner: 'Amber',
+      owner: 'Evan',
       ttc: 16,
       status: 'finished',
       parents: [],
@@ -84,17 +84,53 @@ app.controller('HomeCtrl', function ($scope) {
     }, {
     	id: 6,
       icon: './img/icons/gmail.jpg',
-      title: 'Get awesome Pictures',
+      title: 'Improve UI',
       link: 'http://www.gmail.com',
-      owner: 'Jin',
+      owner: 'Evan',
+      ttc: 10,
+      status: 'open',
+      parents: [],
+      locked: false,
+      children: []
+    },{
+    	id: 7,
+      icon: './img/icons/gmail.jpg',
+      title: 'Make the tree dynamically change rules for the list',
+      link: 'http://www.gmail.com',
+      owner: 'Evan',
       ttc: 4,
       status: 'open',
       parents: [],
       locked: false,
       children: []
-    }];
+    },{
+    	id: 8,
+      icon: './img/icons/gmail.jpg',
+      title: 'Make a dynamic tree',
+      link: 'http://www.gmail.com',
+      owner: 'Evan',
+      ttc: 3,
+      status: 'finished',
+      parents: [],
+      locked: false,
+      children: []
+    },{
+    	id: 9,
+      icon: './img/icons/gmail.jpg',
+      title: 'Make an interactive list with lockable features',
+      link: 'http://www.gmail.com',
+      owner: 'Evan',
+      ttc: 6,
+      status: 'finished',
+      parents: [],
+      locked: false,
+      children: []
+    },
+    ];
   
-  
+  $scope.addThing = function(){
+  	alert('Feature not yet added');
+  }
 
   function assignT (node){ //doing the actual assinging of nodes to a task list
   	var myStatus = false;
@@ -272,11 +308,6 @@ app.controller('HomeCtrl', function ($scope) {
   		console.log('Item', objInfo[0], " moved from ", objInfo[1]);
   		swap(Number(objInfo[0]), objInfo[1]);
 
-  		 //$scope.infoArray = $scope.list1.concat($scope.list2, $scope.list3, $scope.list4);
-  		 // needs a check lock for everyt item method
-  		 //setParents(); 
-  		//if Tree was updated
-
   	},
     connectWith: ".apps-container",
      items: "div:not(.not-sortable)"
@@ -294,5 +325,54 @@ app.controller('HomeCtrl', function ($scope) {
       return null;
   };
 
+	//create data dynamically with hours from 
+	function generateTable (){
+		//i dont know how, well logic through it retard =P
+		//get data from scopelist
+		//assume person hours/day
+		//make a person class
+		//loop until 
+		//list1 =>blocked, raw dump
+		//finish all in process, before jumping to open with the same person
+		//list2+3 =>open
+	}
+	$scope.data = [
+	  {x: 0, val_0: 12, val_1: 21},
+	  {x: 1, val_0: 8, val_1: 22},
+	  {x: 2, val_0: 8, val_1: 14},
+	  {x: 3, val_0: 0, val_1: 14},
+	  {x: 4, val_0: 0, val_1: 14},
+	  {x: 5, val_0: 0, val_1: 0}
+	];
 
-});
+	$scope.options = {
+  stacks: [{axis: "y", series: ["id_0", "id_1"]}],
+  lineMode: "cardinal",
+  series: [
+    {
+      id: "id_0",
+      y: "val_0",
+      label: "Blocked",
+      type: "column",
+      color: "#FF0000",
+      axis: "y"
+    },
+    {
+      id: "id_1",
+      y: "val_1",
+      label: "Open",
+      type: "column",
+      color: "#89CFF0",
+      axis: "y"
+    }
+  ],
+  axes: {x: {type: "linear", key: "x"}, y: {type: "linear"}},
+  tension: 0.7,
+  tooltip: {mode: "scrubber"},
+  drawLegend: true,
+  drawDots: true,
+  columnsHGap: 5
+};
+
+
+	});
