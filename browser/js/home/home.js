@@ -244,22 +244,11 @@ app.controller('HomeCtrl', function($scope) {
         $scope.items = $scope.rootItem;
     }
 
-    //--//--//--//--//--//--//
-    //startup process
-    assignTasks($scope.infoArray); //convert array into list
-    $scope.sortingLog = [];
-    $scope.sortableOptions = {
-        placeholder: "app",
-        connectWith: ".apps-container"
-    };
-    $scope.rootItem = [];
-    setParents();
-    $scope.sortingLog = [];
-    //--//--//--//--//--//--//
+   
 
     function arrayObjectIndexOf(myArray, searchTerm, property) {
         for (var i = 0, len = myArray.length; i < len; i++) {
-            console.log(searchTerm, myArray[i][property])
+            // console.log(searchTerm, myArray[i][property])
             if (myArray[i][property] === searchTerm) return i;
         }
         return -1;
@@ -267,8 +256,8 @@ app.controller('HomeCtrl', function($scope) {
 
     function swap(item, fromLocation) { //pass in list1[index]
         console.log('into swap');
-        console.log(arrayObjectIndexOf($scope.list1, item, 'id') > -1);
-        console.log(arrayObjectIndexOf($scope.list4, item, 'id') > -1);
+        // console.log(arrayObjectIndexOf($scope.list1, item, 'id') > -1);
+        // console.log(arrayObjectIndexOf($scope.list4, item, 'id') > -1);
         if (fromLocation == 4) { //will do later
 
         }
@@ -299,25 +288,11 @@ app.controller('HomeCtrl', function($scope) {
 
     }
 
-    $scope.sortableOptions = {
-        stop: function(e, ui) {
-            // push to infoArray, reset values from updated info
-            console.log('e', e, 'ui', ui)
-            var objInfo = ui.item[0].attributes[1].value.split('-');
-            console.log('Item', objInfo[0], " moved from ", objInfo[1]);
-            swap(Number(objInfo[0]), objInfo[1]);
+    
 
-        },
-        connectWith: ".apps-container",
-        items: "div:not(.not-sortable)"
-    };
+    
 
     $scope.getView = function(item) {
-        /*
-          you can return a different url
-          to load a different template dynamically
-          based on the provided item 
-          */
         if (item) {
             return 'nestable_item.html';
         }
@@ -368,7 +343,7 @@ app.controller('HomeCtrl', function($scope) {
         return to;
     }
 
-    var people = [{
+    $scope.people = [{
         name: "evan",
         modifier: 0.8,
         util: 0
@@ -378,7 +353,10 @@ app.controller('HomeCtrl', function($scope) {
         util: 0
     }];
 
-    $scope.setTableData = function() {
+    $scope.data =[];
+    function setTableData () {
+        console.log('setting table data');
+        $scope.data = [];
         var hrsPerDay = 8; //info you can set
 
         var resolved = false;
@@ -387,12 +365,13 @@ app.controller('HomeCtrl', function($scope) {
         var list1clone = extend($scope.list1);
         var list2clone = extend($scope.list2);
         var list3clone = extend($scope.list3);
-
+        console.log('list1clone', list1clone);
+        console.log('people', $scope.people);
         while (!resolved) {
-            var data = [];
             var backlog = 0;
             var activelog = 0;
-            people.forEach(function(person) { //reset person hours
+            debugger;
+            $scope.people.forEach(function(person) { //reset person hours
                 person.util = 0;
             })
 
@@ -402,30 +381,30 @@ app.controller('HomeCtrl', function($scope) {
             //cycle through active items, removing finished tasks, 
             if (list3clone.length > 0) {
                 list3clone.forEach(function(element) { //active tasks
-                    if (element.ttc > (8 - people[0].util)) {
-                        element.ttc -= (8 - people[0].util);
-                        people[0].util = 0;
+                    if (element.ttc > (8 - $scope.people[0].util)) {
+                        element.ttc -= (8 - $scope.people[0].util);
+                        $scope.people[0].util = 0;
                         activelog += element.ttc;
                     } else {
-                        people[0].util += element.ttc; //add the tasks hours to the person
+                        $scope.people[0].util += element.ttc; //add the tasks hours to the person
                         list3clone.pop(); //remove item from the things to do
                     }
                 });
             }
             if (list2clone.length > 0) { //cycle through open items
                 list2clone.forEach(function(element) { //active tasks
-                    if (element.ttc > (8 - people[0].util)) {
-                        element.ttc -= (8 - people[0].util);
-                        people[0].util = 0;
+                    if (element.ttc > (8 - $scope.people[0].util)) {
+                        element.ttc -= (8 - $scope.people[0].util);
+                        $scope.people[0].util = 0;
                         activelog += element.ttc;
                     } else {
-                        people[0].util += element.ttc; //add the tasks hours to the person
+                        $scope.people[0].util += element.ttc; //add the tasks hours to the person
                         list2clone.pop(); //remove item from the things to do
                     }
                 });
                 //find users modifier //phase 2
             }
-            data.push({
+            $scope.data.push({
                 x: inc,
                 val_1: activelog,
                 val_0: backlog
@@ -436,7 +415,7 @@ app.controller('HomeCtrl', function($scope) {
             }
         }
     }
-    $scope.setTableData();
+
     $scope.options = {
         stacks: [{
             axis: "y",
@@ -475,4 +454,35 @@ app.controller('HomeCtrl', function($scope) {
         drawDots: true,
         columnsHGap: 5
     };
+
+    //--//--//--//--//--//--//
+    //startup process
+    console.log('starting up');
+    assignTasks($scope.infoArray); //convert array into list
+    $scope.sortingLog = [];
+    $scope.sortableOptions = {
+        placeholder: "app",
+        connectWith: ".apps-container"
+    };
+    $scope.rootItem = [];
+    setParents();
+    $scope.sortingLog = [];
+    setTableData();
+    //--//--//--//--//--//--//
+
+    $scope.sortableOptions = {
+        stop: function(e, ui) {
+            // push to infoArray, reset values from updated info
+            console.log('e', e, 'ui', ui)
+            var objInfo = ui.item[0].attributes[1].value.split('-');
+            console.log('Item', objInfo[0], " moved from ", objInfo[1]);
+            swap(Number(objInfo[0]), objInfo[1]);
+            setTableData();
+        },
+        connectWith: ".apps-container",
+        items: "div:not(.not-sortable)"
+    };
+
 });
+
+ 
