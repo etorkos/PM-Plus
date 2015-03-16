@@ -262,15 +262,15 @@ app.controller('HomeCtrl', function($scope) {
 
         }
 
-        if (arrayObjectIndexOf($scope.list1, item, 'id') > -1) { //if object came back to blocked
+        if (arrayObjectIndexOf($scope.list1, item, 'id') > -1) { //if object moves back to list1 / blocked
             console.log('item moved to list one');
             var objSwap = $scope.list1[arrayObjectIndexOf($scope.list1, item, 'id')];
             objSwap.locked = false;
             objSwap.status = 'open';
             return;
-        } else if (arrayObjectIndexOf($scope.list4, item, 'id') > -1) { //if object landed at finished tasks
+        } else if (arrayObjectIndexOf($scope.list4, item, 'id') > -1) { //if object landed at list4 / finished tasks
             console.log('item moved to list 4');
-            var objSwap = $scope.list4[arrayObjectIndexOf($scope.list4, item, 'id')];
+            var objSwap = $scope.list4[arrayObjectIndexOf($scope.list4, item, 'id')]; //sets status of item to finished
             objSwap.locked = false;
             objSwap.status = 'finished';
             // console.log('main object', objSwap);
@@ -285,12 +285,9 @@ app.controller('HomeCtrl', function($scope) {
             }
             return;
         }
-
     }
 
-    
 
-    
 
     $scope.getView = function(item) {
         if (item) {
@@ -298,33 +295,6 @@ app.controller('HomeCtrl', function($scope) {
         }
         return null;
     };
-
-    //create data dynamically with hours from 
-    // $scope.data = [{
-    //     x: 0,
-    //     val_0: 12,
-    //     val_1: 21
-    // }, {
-    //     x: 1,
-    //     val_0: 8,
-    //     val_1: 22
-    // }, {
-    //     x: 2,
-    //     val_0: 8,
-    //     val_1: 14
-    // }, {
-    //     x: 3,
-    //     val_0: 0,
-    //     val_1: 14
-    // }, {
-    //     x: 4,
-    //     val_0: 0,
-    //     val_1: 14
-    // }, {
-    //     x: 5,
-    //     val_0: 0,
-    //     val_1: 0
-    // }];
 
     // extends 'from' object with members from 'to'. If 'to' is null, a deep clone of 'from' is returned
     function extend(from, to) {
@@ -367,41 +337,68 @@ app.controller('HomeCtrl', function($scope) {
         var list3clone = extend($scope.list3);
         console.log('list1clone', list1clone);
         console.log('people', $scope.people);
+
         while (!resolved) {
             var backlog = 0;
             var activelog = 0;
-            debugger;
             $scope.people.forEach(function(person) { //reset person hours
                 person.util = 0;
             })
 
             list1clone.forEach(function(element) { //action backlog from day start point
+                console.log(element.title, 'added to backlog');
                 backlog += element.ttc;
             });
             //cycle through active items, removing finished tasks, 
             if (list3clone.length > 0) {
-                list3clone.forEach(function(element) { //active tasks
-                    if (element.ttc > (8 - $scope.people[0].util)) {
-                        element.ttc -= (8 - $scope.people[0].util);
-                        $scope.people[0].util = 0;
-                        activelog += element.ttc;
+                // list3clone.forEach(function(element) { //active tasks
+                  for(var a=0; a<list3clone.length; a++){
+
+                    if (list3clone[a].ttc > (8 - $scope.people[0].util)) { //if there is more work than person hours
+                        list3clone[a].ttc -= (8 - $scope.people[0].util);
+                        $scope.people[0].util = 8;
+                        activelog += list3clone[a].ttc;
+                        console.log(list3clone[a].title, 'partially added to activelog');
                     } else {
-                        $scope.people[0].util += element.ttc; //add the tasks hours to the person
-                        list3clone.pop(); //remove item from the things to do
+                        $scope.people[0].util += list3clone[a].ttc; //add the tasks hours to the person
+                        console.log(list3clone[a].title, 'fully completed and removed from service');
+                        var expelled = list3clone.shift(); //remove item from the things to do
+                        a--;
+                        if(expelled.parents.length > 0){
+                          console.log("location", arrayObjectIndexOf(list1clone, expelled.parents[0], 'id'));
+                          var parent = list1clone.splice(arrayObjectIndexOf(list1clone, expelled.parents[0], 'id'), 1)[0]; //slices parent from list1clone
+                          console.log('parent', parent);
+                          parent.status = 'open';
+                          list2clone.push(parent);
+                        }
                     }
-                });
+                  }
+
+                // });
             }
             if (list2clone.length > 0) { //cycle through open items
-                list2clone.forEach(function(element) { //active tasks
-                    if (element.ttc > (8 - $scope.people[0].util)) {
-                        element.ttc -= (8 - $scope.people[0].util);
-                        $scope.people[0].util = 0;
-                        activelog += element.ttc;
+                // list2clone.forEach(function(element) { //active tasks
+                  for(var b=0; b<list2clone.length; b++){
+                    if (list2clone[b].ttc > (8 - $scope.people[0].util)) {
+                        list2clone[b].ttc -= (8 - $scope.people[0].util);
+                        $scope.people[0].util = 8;
+                        activelog += list2clone[b].ttc;
+                        console.log(list2clone[b].title, 'partially added to activelog');
                     } else {
-                        $scope.people[0].util += element.ttc; //add the tasks hours to the person
-                        list2clone.pop(); //remove item from the things to do
+                        $scope.people[0].util += list2clone[b].ttc; //add the tasks hours to the person
+                        console.log(list2clone[b].title, 'fully completed and removed from service');
+                        var expelled = list2clone.shift(); //remove item from the things to do
+                        b--;
+                        if(expelled.parents.length > 0){
+                          console.log("location", arrayObjectIndexOf(list1clone, expelled.parents[0], 'id'))
+                          var parent = list1clone.splice(arrayObjectIndexOf(list1clone, expelled.parents[0], 'id'), 1)[0]; //slices parent from list1clone
+                          console.log('parent', parent);
+                          parent.status = 'open';
+                          list2clone.push(parent);
+                        }
                     }
-                });
+                  }
+                // });
                 //find users modifier //phase 2
             }
             $scope.data.push({
@@ -410,7 +407,10 @@ app.controller('HomeCtrl', function($scope) {
                 val_0: backlog
             });
             inc++;
-            if (!list2clone.length) {
+            console.log('//////////////DAYS GO BY/////////////');
+            console.log('list1', list1clone, 'list2', list2clone, 'list3', list3clone)
+            console.log('total info to graph to this point', $scope.data);
+            if (!list2clone.length && !list3clone.length && !list1clone.length) {
                 resolved = true;
             }
         }
