@@ -19,7 +19,7 @@ var childThing = {
 	      status: 'blocked',
 	      locked: true,
 	      parents: [],
-}
+};
 
 thing.children.push(childThing);
 thing.children.indexOf(childThing);
@@ -27,4 +27,4 @@ thing.children.indexOf(childThing);
 function Card (children, parents) {
 
 	
-}
+};
