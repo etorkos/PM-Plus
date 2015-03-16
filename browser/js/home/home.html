@@ -7,74 +7,71 @@
     	</div>
     </div>
 
-    <div class='floatleft'>
-	  	<div class="floatleft col-md-2">
-	  		<h3>Blocked Tasks</h3>
-	    	<div id='list1' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list1">
-	      		<div class="app" id='{{app.id}}-1' ng-repeat="app in list1" ng-class="{'not-sortable': app.locked}">
-	      			<span class='floatleft'>{{$index}} </span>
-	      			<h5>{{app.title}}</h5>
-	      			<h5>Owner: {{app.owner}}</h5>
-	      			<h6>Hours: {{app.ttc}}</h6>
-	      		</div>
-	    	</div>
-	    </div>
+    <div class='row topinfo'>
+	    <div class='floatleft'>
+		  	<div class="floatleft col-md-2">
+		  		<h3>Blocked Tasks</h3>
+		    	<div id='list1' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list1">
+		      		<div class="app" id='{{app.id}}-1' ng-repeat="app in list1" ng-class="{'not-sortable': app.locked}">
+		      			<span class='floatleft'>{{$index}} </span>
+		      			<h5>{{app.title}}</h5>
+		      			<h5>Owner: {{app.owner}}</h5>
+		      			<h6>Hours: {{app.ttc}}</h6>
+		      		</div>
+		    	</div>
+		    </div>
 
-	    <div class="floatleft col-md-2">
-	    	<h3>Open Tasks</h3>	
-	    	<div id='list2' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list2">
-	      		<div class="app" id='{{app.id}}-2' ng-repeat="app in list2"> 
-	      			<span class='floatleft'>{{$index}} </span>
-	      			<h5>{{app.title}}</h5>
-	      			<h5>Owner: {{app.owner}}</h5>
-	      			<h6>Hours: {{app.ttc}}</h6>
-	      		</div>
+		    <div class="floatleft col-md-2">
+		    	<h3>Open Tasks</h3>	
+		    	<div id='list2' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list2">
+		      		<div class="app" id='{{app.id}}-2' ng-repeat="app in list2"> 
+		      			<span class='floatleft'>{{$index}} </span>
+		      			<h5>{{app.title}}</h5>
+		      			<h5>Owner: {{app.owner}}</h5>
+		      			<h6>Hours: {{app.ttc}}</h6>
+		      		</div>
 
-	    	</div>
-	    </div>
+		    	</div>
+		    </div>
 
-		<div class="floatleft col-md-2">		
-	    	<h3>In Process</h3>	
-	    	<div id='list3' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list3">
-	      		<div class="app" id='{{app.id}}-3' ng-repeat="app in list3">
-	      			<span class='floatleft'>{{$index}} </span>
-	      			<h5>{{app.title}}</h5>
-	      			<h5>Owner: {{app.owner}}</h5>
-	      			<h6>Hours: {{app.ttc}}</h6>
-	      		</div>
-	    	</div>
+			<div class="floatleft col-md-2">		
+		    	<h3>In Process</h3>	
+		    	<div id='list3' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list3">
+		      		<div class="app" id='{{app.id}}-3' ng-repeat="app in list3">
+		      			<span class='floatleft'>{{$index}} </span>
+		      			<h5>{{app.title}}</h5>
+		      			<h5>Owner: {{app.owner}}</h5>
+		      			<h6>Hours: {{app.ttc}}</h6>
+		      		</div>
+		    	</div>
+			</div>
+
+			<div class="floatleft col-md-2">
+		    	<h3>Finished Tasks</h3>	
+		    	<div id='list4' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list4">
+		      		<div class="app" id='{{app.id}}-4' ng-repeat="app in list4">
+		      			<span class='floatleft'>{{$index}} </span> 
+		      			<h5>{{app.title}}</h5>
+		      			<h5>Owner: {{app.owner}}</h5>
+		      			<h6>Hours: {{app.ttc}}</h6>
+		      		</div>
+		    	</div>
+		    </div>
+
+		    <div class='floatright col-md-4'>
+			    <h3>Dynamic Task Tree</h3>
+			  	<div class="floatleft bump">
+			    	<tg-dynamic-directive ng-model="rootItem" tg-dynamic-directive-view="getView">
+			    	</tg-dynamic-directive>
+			    	<div style="clear: both;"></div>
+			  	</div>
+
+			</div>
+		    <div style="clear: both;"></div>
 		</div>
-
-		<div class="floatleft col-md-2">
-	    	<h3>Finished Tasks</h3>	
-	    	<div id='list4' ui-sortable="sortableOptions" class="apps-container screen floatleft" ng-model="list4">
-	      		<div class="app" id='{{app.id}}-4' ng-repeat="app in list4">
-	      			<span class='floatleft'>{{$index}} </span> 
-	      			<h5>{{app.title}}</h5>
-	      			<h5>Owner: {{app.owner}}</h5>
-	      			<h6>Hours: {{app.ttc}}</h6>
-	      		</div>
-	    	</div>
-	    </div>
-
-	    <div class='floatright col-md-4'>
-		    <h3>Dynamic Task Tree</h3>
-		  	<div class="floatleft bump">
-		    	<tg-dynamic-directive ng-model="rootItem" tg-dynamic-directive-view="getView">
-		    	</tg-dynamic-directive>
-		    	<div style="clear: both;"></div>
-		  	</div>
-
-		  	<div class="floatright">
-		  		<p>Info Log</p>
-		  		<p>{{children}}</p>
-		  	</div>
-		</div>
-	    <div style="clear: both;"></div>
 	</div>
-
 	
-{{rootItem | json}} </br>
+<!-- {{rootItem | json}} </br> -->
 
 	<!-- Model Log -->
   <!-- <div class="floatleft col-md-2">
@@ -87,11 +84,14 @@
   </div>
   
   <div class="clear"></div> -->
-
-  <!-- Graph section -->
-  <div class='floatleft'>
-  	<linechart data="data" options="options" mode="" width="" height=""></linechart>
-  </div>
+  	<div class='graph'>
+	  <div class='row stylus'>
+	  	<h3>Waterfall Graph from current state</h3>
+	  </div>
+	  <div class='floatcenter container'>
+	  	<linechart data="data" options="options" mode="" width="" height=""></linechart>
+	  </div>
+	</div>
 </section>
 
 <script type="text/ng-template" id="nestable_item.html">

@@ -101,6 +101,10 @@ h4, h5, h6 {
 .floatright {
   float: right;
 }
+.floatcenter {
+	float: center;
+}
+
 .apps-container .not-sortable {
   background: red !important;
   cursor: default !important;
@@ -123,4 +127,11 @@ tg-dynamic-directive {
 }
 .minus {
 	min-height:25px;
+}
+.stylus h3{
+	margin-bottom: 30px;
+	margin-top: 60px;
+}
+.graph{
+	background: #F8F8F8 ;
 }

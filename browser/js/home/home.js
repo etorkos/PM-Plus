@@ -370,6 +370,7 @@ app.controller('HomeCtrl', function($scope) {
                           console.log('parent', parent);
                           parent.status = 'open';
                           list2clone.push(parent);
+                          backlog-=parent.ttc;
                         }
                     }
                   }
@@ -395,6 +396,7 @@ app.controller('HomeCtrl', function($scope) {
                           console.log('parent', parent);
                           parent.status = 'open';
                           list2clone.push(parent);
+                          backlog-=parent.ttc;
                         }
                     }
                   }
@@ -440,10 +442,10 @@ app.controller('HomeCtrl', function($scope) {
         axes: {
             x: {
                 type: "linear",
-                key: "x"
+                key: "x", ticks:8
             },
             y: {
-                type: "linear"
+                type: "linear", min:0, ticks:8
             }
         },
         tension: 0.7,
